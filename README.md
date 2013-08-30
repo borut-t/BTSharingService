@@ -1,7 +1,7 @@
-BTButton
+BTSharingService
 ========
 
-Custom UIButton implementation with image and text.
+Nice and simple sharing service solution.
 
 ##Preview
-![iPhone portrait](https://github.com/borut-t/BTButton/raw/master/Screenshots/preview.png)
+![iPhone portrait](https://github.com/borut-t/BTSharingService/raw/master/Screenshots/preview.png)
