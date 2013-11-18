@@ -1,0 +1,15 @@
+"MailNotEnabledTitle"       = "You need to add mail account to send mail messages";
+"MailNotEnabledMsg"         = "You can do this in device settings (Settings -> Mail, Contacts, Calendars).";
+
+"iMessageNotEnabledTitle"   = "Messages service is not enabled";
+"iMessageNotEnabledMsg"     = "Please enable it in device settings (Settings -> Messages).";
+
+"FacebookNotEnabledTitle"   = "Facebook is not enabled";
+"FacebookNotEnabledMsg"     = "Please enable it in device settings (Settings -> Facebook).";
+"FacebookNotAvailableTitle" = "Facebook is only available for devices with iOS 6.0 or newer";
+"FacebookNotAvailableMsg"   = "Please upgrade.";
+
+"TwitterNotEnabledTitle"    = "Twitter is not enabled";
+"TwitterNotEnabledMsg"      = "You can enable it in device settings (Settings -> Twitter).";
+"TwitterNotAvailableTitle"  = "Twitter is only available for devices with iOS 5.0 or newer";
+"TwitterNotAvailableMsg"    = "Please upgrade.";

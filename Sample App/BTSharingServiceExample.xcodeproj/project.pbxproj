@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF6240B6183A3F91006F230B /* BTSharingService.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF6240B5183A3F91006F230B /* BTSharingService.bundle */; };
+		BF6240B9183A42BF006F230B /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BF6240B8183A42BF006F230B /* bg.png */; };
 		BFA6170417D09602004EF888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA6170317D09602004EF888 /* UIKit.framework */; };
 		BFA6170617D09602004EF888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA6170517D09602004EF888 /* Foundation.framework */; };
 		BFA6170817D09602004EF888 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA6170717D09602004EF888 /* CoreGraphics.framework */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF6240B5183A3F91006F230B /* BTSharingService.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BTSharingService.bundle; sourceTree = "<group>"; };
+		BF6240B8183A42BF006F230B /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		BFA6170017D09602004EF888 /* BTSharingServiceExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTSharingServiceExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFA6170317D09602004EF888 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFA6170517D09602004EF888 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -65,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF6240B7183A428A006F230B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				BF6240B8183A42BF006F230B /* bg.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		BFA616F717D09602004EF888 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +116,7 @@
 				BFA6171B17D09603004EF888 /* ViewController.h */,
 				BFA6171C17D09603004EF888 /* ViewController.m */,
 				BFA6171E17D09603004EF888 /* ViewController.xib */,
+				BF6240B7183A428A006F230B /* Images */,
 				BFA6170A17D09602004EF888 /* Supporting Files */,
 			);
 			path = BTSharingServiceExample;
@@ -128,6 +141,7 @@
 			children = (
 				BFA6172A17D09656004EF888 /* BTSharingService.h */,
 				BFA6172B17D09656004EF888 /* BTSharingService.m */,
+				BF6240B5183A3F91006F230B /* BTSharingService.bundle */,
 			);
 			name = BTSharingService;
 			path = ../../BTSharingService;
@@ -188,6 +202,8 @@
 				BFA6171617D09602004EF888 /* Default.png in Resources */,
 				BFA6171817D09603004EF888 /* Default@2x.png in Resources */,
 				BFA6171A17D09603004EF888 /* Default-568h@2x.png in Resources */,
+				BF6240B9183A42BF006F230B /* bg.png in Resources */,
+				BF6240B6183A3F91006F230B /* BTSharingService.bundle in Resources */,
 				BFA6172017D09603004EF888 /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

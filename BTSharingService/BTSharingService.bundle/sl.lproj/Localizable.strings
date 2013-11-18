@@ -1,0 +1,15 @@
+"MailNotEnabledTitle"       = "Za pošiljanje elektronskih sporočil si nastavite poštni račun";
+"MailNotEnabledMsg"         = "To lahko storite v nastavitvah naprave (Settings -> Mail, Contacts, Calendars).";
+
+"iMessageNotEnabledTitle"   = "Pošiljanje Message sporočil ni vklopljeno";
+"iMessageNotEnabledMsg"     = "Vklopite jih v nastavitvah naprave (Settings -> Messages).";
+
+"FacebookNotEnabledTitle"   = "Facebook račun ni vklopljen";
+"FacebookNotEnabledMsg"     = "Vklopite ga v nastavitvah naprave (Settings -> Facebook).";
+"FacebookNotAvailableTitle" = "Facebook je na voljo samo za naprave z nameščenim iOS 6.0 ali novejšim.";
+"FacebookNotAvailableMsg"   = "Če imate možnost potem nadgradite iOS.";
+
+"TwitterNotEnabledTitle"    = "Twitter račun ni vklopljen";
+"TwitterNotEnabledMsg"      = "Vklopite ga v nastavitvah naprave (Settings -> Twitter).";
+"TwitterNotAvailableTitle"  = "Twitter je na voljo samo za naprave z nameščenim iOS 5.0 ali novejšim.";
+"TwitterNotAvailableMsg"    = "Če imate možnost potem nadgradite iOS.";
