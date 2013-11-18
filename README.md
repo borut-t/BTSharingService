@@ -17,15 +17,20 @@ Methods
 
 The BTProgressView has the following properties:
 
-- (void)setPreferredLanguage:(NSString *)language;
+              - (void)setPreferredLanguage:(NSString *)language;
 
 Set language if you do not want to have system's default language.
 
-- (void)shareWithType:(BTSharingServiceType)serviceType
-              subject:(NSString *)subject
-                 body:(NSString *)body
-                  url:(NSURL *)url
+              - (void)shareWithType:(BTSharingServiceType)serviceType
+                            subject:(NSString *)subject
+                               body:(NSString *)body
+                            url:(NSURL *)url
            recipients:(NSArray *)recipients
      onViewController:(UIViewController *)viewController;
 
 Trigger share widget.
+
+
+## ARC Support
+
+BTBadgeView fully supports ARC.
