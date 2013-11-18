@@ -24,9 +24,9 @@ Set language if you do not want to have system's default language.
               - (void)shareWithType:(BTSharingServiceType)serviceType
                             subject:(NSString *)subject
                                body:(NSString *)body
-                            url:(NSURL *)url
-           recipients:(NSArray *)recipients
-     onViewController:(UIViewController *)viewController;
+                                url:(NSURL *)url
+                         recipients:(NSArray *)recipients
+                   onViewController:(UIViewController *)viewController;
 
 Trigger share widget.
 
