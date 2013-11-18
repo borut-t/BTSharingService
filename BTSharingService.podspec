@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'BTSharingService'
-  s.version      = '1.1'
+  s.version      = '1.0'
   s.summary      = 'Nice and simple sharing service.'
   s.homepage     = 'https://github.com/borut-t/BTSharingService'
   s.license      = { :type => 'zlib', :file => 'LICENCE.md' }
