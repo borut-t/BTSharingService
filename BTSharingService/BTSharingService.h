@@ -1,7 +1,7 @@
 //
 //  BTSharingService.h
 //
-//  Version 1.0.0
+//  Version 1.1
 //
 //  Created by Borut Tomazin on 8/30/2013.
 //  Copyright 2013 Borut Tomazin
@@ -44,6 +44,12 @@ typedef NS_ENUM(NSInteger, BTSharingServiceType) {
 
 + (id)sharedInstance;
 
-- (void)shareWithServiceType:(BTSharingServiceType)serviceType forSharingData:(NSDictionary *)sharingData onViewController:(UIViewController *)viewController;
+- (void)setPreferredLanguage:(NSString *)language;
+- (void)shareWithType:(BTSharingServiceType)serviceType
+              subject:(NSString *)subject
+                 body:(NSString *)body
+                  url:(NSURL *)url
+           recipients:(NSArray *)recipients
+     onViewController:(UIViewController *)viewController;
 
 @end

@@ -1,7 +1,7 @@
 //
 //  BTSharingService.m
 //
-//  Version 1.0.0
+//  Version 1.1
 //
 //  Created by Borut Tomazin on 8/30/2013.
 //  Copyright 2013 Borut Tomazin
@@ -35,22 +35,24 @@
 #import <Twitter/Twitter.h>
 #import <MessageUI/MessageUI.h>
 #import <Social/Social.h>
-#import "Facebook.h"
 
-#define kFacebookKey @"XXXXX"
+//localization keys
+static NSString *const kMailNotEnabledTitleKey       = @"MailNotEnabledTitle";
+static NSString *const kMailNotEnabledMsgKey         = @"MailNotEnabledMsg";
+static NSString *const kiMessageNotEnabledTitleKey   = @"iMessageNotEnabledTitle";
+static NSString *const kiMessageNotEnabledMsgKey     = @"iMessageNotEnabledMsg";
+static NSString *const kFacebookNotEnabledTitleKey   = @"FacebookNotEnabledTitle";
+static NSString *const kFacebookNotEnabledMsgKey     = @"FacebookNotEnabledMsg";
+static NSString *const kFacebookNotAvailableTitleKey = @"FacebookNotAvailableTitle";
+static NSString *const kFacebookNotAvailableMsgKey   = @"FacebookNotAvailableMsg";
+static NSString *const kTwitterNotEnabledTitleKey    = @"TwitterNotEnabledTitle";
+static NSString *const kTwitterNotEnabledMsgKey      = @"TwitterNotEnabledMsg";
+static NSString *const kTwitterNotAvailableTitleKey  = @"TwitterNotAvailableTitle";
+static NSString *const kTwitterNotAvailableMsgKey    = @"TwitterNotAvailableMsg";
 
-#define kMailNotEnabledTitle      @"Za pošiljanje elektronskih sporočil si najprej ustvarite poštni račun."
-#define kMailNotEnabledMsg        @"To lahko storite v nastavitvah naprave (Settings -> Mail, Contacts, Calendars)."
-#define kiMessageNotEnabledTitle  @"Pošiljanje Message sporočil ni na voljo."
-#define kiMessageNotEnabledMsg    @"Vklopite jih v nastavitvah naprave (Settings -> Messages)."
-#define kFacebookNotEnabledTitle  @"Facebook račun ni vklopljen."
-#define kFacebookNotEnabledMsg    @"Vklopite ga v nastavitvah naprave (Settings -> Facebook)."
-#define kTwitterNotEnabledTitle   @"Twitter račun ni vklopljen."
-#define kTwitterNotEnabledMsg     @"Vklopite ga v nastavitvah naprave (Settings -> Twitter)."
-#define kTwitterNotAvailableTitle @"Twitter je na voljo samo za naprave z nameščenim iOS 5.0 ali novejšim."
-#define kTwitterNotAvailableMsg   @"Če imate možnost potem nadgradite iOS."
+@interface BTSharingService() <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
-@interface BTSharingService() <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, FBDialogDelegate, FBRequestDelegate, FBSessionDelegate>
+@property (nonatomic, strong) NSString *prefferedLanguage;
 
 @end
 
@@ -66,57 +68,86 @@
     return sharedInstance;
 }
 
-- (void)shareWithServiceType:(BTSharingServiceType)serviceType forSharingData:(NSDictionary *)sharingData onViewController:(UIViewController *)viewController
+- (NSString *)localizedStringForKey:(NSString *)key
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"BTSharingService" ofType:@"bundle"];
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    if (self.prefferedLanguage != nil && [bundle.localizations containsObject:self.prefferedLanguage]) {
+        bundlePath = [bundle pathForResource:self.prefferedLanguage ofType:@"lproj"];
+        bundle = [NSBundle bundleWithPath:bundlePath];
+    }
+    
+    return [bundle localizedStringForKey:key value:@"" table:nil];
+}
+
+- (void)setPreferredLanguage:(NSString *)language
+{
+    self.prefferedLanguage = language;
+}
+
+- (void)shareWithType:(BTSharingServiceType)serviceType subject:(NSString *)subject body:(NSString *)body url:(NSURL *)url recipients:(NSArray *)recipients onViewController:(UIViewController *)viewController
 {
     switch (serviceType) {
-        //Facebook
+            
+            //Facebook
         case BTSharingServiceTypeFacebook:
         {
             // iOS 6+
             if ([SLComposeViewController class]) {
                 if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-                    __weak SLComposeViewController *facebookController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-                    [facebookController setInitialText:[sharingData objectForKey:@"body"]];
-                    [facebookController addURL:[NSURL URLWithString:[sharingData objectForKey:@"url"]]];
+                    SLComposeViewController *facebookController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                    [facebookController setInitialText:body];
+                    [facebookController addURL:url];
+                    
+                    __weak SLComposeViewController *weakFacebookController = facebookController;
                     facebookController.completionHandler = ^(SLComposeViewControllerResult result) {
-                        [facebookController dismissViewControllerAnimated:YES completion:nil];
+                        [weakFacebookController dismissViewControllerAnimated:YES completion:nil];
                     };
+                    
                     [viewController presentViewController:facebookController animated:YES completion:nil];
                 }
                 else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:kFacebookNotEnabledTitle
-                                                                        message:kFacebookNotEnabledMsg
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kFacebookNotEnabledTitleKey]
+                                                                        message:[self localizedStringForKey:kFacebookNotEnabledMsgKey]
                                                                        delegate:nil
                                                               cancelButtonTitle:@"V redu"
                                                               otherButtonTitles:nil, nil];
                     [alertView show];
                 }
             }
-            // iOS < 6
+            // not available
             else {
-                Facebook *facebook = [[Facebook alloc] initWithAppId:kFacebookKey andDelegate:self];
-                [facebook dialog:@"feed" andParams:[@{@"app_id": kFacebookKey, @"name": [sharingData objectForKey:@"body"], @"link": [sharingData objectForKey:@"url"]} mutableCopy] andDelegate:self];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kFacebookNotAvailableTitleKey]
+                                                                    message:[self localizedStringForKey:kFacebookNotAvailableMsgKey]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"V redu"
+                                                          otherButtonTitles:nil, nil];
+                [alertView show];
             }
         }
-        break;
+            break;
             
-        //Twitter
+            //Twitter
         case BTSharingServiceTypeTwitter:
         {
             // iOS 6+
             if ([SLComposeViewController class]) {
                 if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-                    __weak SLComposeViewController *twitterController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-                    [twitterController setInitialText:[sharingData objectForKey:@"body"]];
-                    [twitterController addURL:[NSURL URLWithString:[sharingData objectForKey:@"url"]]];
+                    SLComposeViewController *twitterController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+                    [twitterController setInitialText:body];
+                    [twitterController addURL:url];
+                    
+                    __weak SLComposeViewController *weakTwitterController = twitterController;
                     twitterController.completionHandler = ^(TWTweetComposeViewControllerResult result) {
-                        [twitterController dismissViewControllerAnimated:YES completion:nil];
+                        [weakTwitterController dismissViewControllerAnimated:YES completion:nil];
                     };
+                    
                     [viewController presentViewController:twitterController animated:YES completion:nil];
                 }
                 else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:kTwitterNotEnabledTitle
-                                                                        message:kTwitterNotEnabledMsg
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotEnabledTitleKey]
+                                                                        message:[self localizedStringForKey:kTwitterNotEnabledMsgKey]
                                                                        delegate:nil
                                                               cancelButtonTitle:@"V redu"
                                                               otherButtonTitles:nil, nil];
@@ -127,18 +158,19 @@
             else if ([TWTweetComposeViewController class]) {
                 if ([TWTweetComposeViewController canSendTweet]) {
                     TWTweetComposeViewController *twitterController = [[TWTweetComposeViewController alloc] init];
-                    [twitterController setInitialText:[sharingData objectForKey:@"body"]];
-                    [twitterController addURL:[NSURL URLWithString:[sharingData objectForKey:@"url"]]];
+                    [twitterController setInitialText:body];
+                    [twitterController addURL:url];
                     
                     __weak TWTweetComposeViewController *weakTwitterController = twitterController;
                     twitterController.completionHandler = ^(TWTweetComposeViewControllerResult result) {
                         [weakTwitterController dismissViewControllerAnimated:YES completion:nil];
                     };
+                    
                     [viewController presentViewController:twitterController animated:YES completion:nil];
                 }
                 else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:kTwitterNotEnabledTitle
-                                                                        message:kTwitterNotEnabledMsg
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotEnabledTitleKey]
+                                                                        message:[self localizedStringForKey:kTwitterNotEnabledMsgKey]
                                                                        delegate:nil
                                                               cancelButtonTitle:@"V redu"
                                                               otherButtonTitles:nil, nil];
@@ -147,69 +179,69 @@
             }
             // not available
             else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:kTwitterNotAvailableTitle
-                                                                    message:kTwitterNotAvailableMsg
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotAvailableTitleKey]
+                                                                    message:[self localizedStringForKey:kTwitterNotAvailableMsgKey]
                                                                    delegate:nil
                                                           cancelButtonTitle:@"V redu"
                                                           otherButtonTitles:nil, nil];
                 [alertView show];
             }
         }
-        break;
+            break;
             
-        //Mail
+            //Mail
         case BTSharingServiceTypeMail:
         {
             if ([MFMailComposeViewController canSendMail]) {
                 MFMailComposeViewController *sendEmail = [[MFMailComposeViewController alloc] init];
                 sendEmail.mailComposeDelegate = self;
-                [sendEmail setSubject:[sharingData objectForKey:@"title"]];
-                [sendEmail setMessageBody:[sharingData objectForKey:@"body"] isHTML:YES];
-                if ([sharingData objectForKey:@"recipients"] != nil) {
-                    [sendEmail setToRecipients:[sharingData objectForKey:@"recipients"]];
+                [sendEmail setSubject:subject];
+                [sendEmail setMessageBody:body isHTML:YES];
+                if (recipients != nil && recipients.count > 0) {
+                    [sendEmail setToRecipients:recipients];
                 }
                 sendEmail.modalPresentationStyle = UIModalPresentationFormSheet;
-                [viewController presentModalViewController:sendEmail animated:YES];
+                [viewController presentViewController:sendEmail animated:YES completion:NULL];
             }
             else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kMailNotEnabledTitle
-                                                                message:kMailNotEnabledMsg
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kMailNotEnabledTitleKey]
+                                                                message:[self localizedStringForKey:kMailNotEnabledMsgKey]
                                                                delegate:nil
                                                       cancelButtonTitle:@"V redu"
                                                       otherButtonTitles:nil];
                 [alert show];
             }
         }
-        break;
+            break;
             
-        //iMessage
+            //iMessage
         case BTSharingServiceTypeiMessage:
         {
             if ([MFMessageComposeViewController canSendText]) {
                 MFMessageComposeViewController *sendMessage = [[MFMessageComposeViewController alloc] init];
                 sendMessage.messageComposeDelegate = self;
-                [sendMessage setBody:[sharingData objectForKey:@"body"]];
+                [sendMessage setBody:body];
                 sendMessage.modalPresentationStyle = UIModalPresentationFormSheet;
-                [viewController presentModalViewController:sendMessage animated:YES];
+                [viewController presentViewController:sendMessage animated:YES completion:NULL];
             }
             // not available
             else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kiMessageNotEnabledTitle
-                                                                message:kiMessageNotEnabledMsg
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kiMessageNotEnabledTitleKey]
+                                                                message:[self localizedStringForKey:kiMessageNotEnabledMsgKey]
                                                                delegate:nil
                                                       cancelButtonTitle:@"V redu"
                                                       otherButtonTitles:nil];
                 [alert show];
             }
         }
-        break;
+            break;
             
-        //Safari
+            //Safari
         case BTSharingServiceTypeSafari:
         {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[sharingData objectForKey:@"url"]]];
+            [[UIApplication sharedApplication] openURL:url];
         }
-        break;
+            break;
     }
 }
 
@@ -218,7 +250,7 @@
 #pragma mark - MailComposer Delegate
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    [[controller presentingViewController] dismissModalViewControllerAnimated:YES];
+    [[controller presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
@@ -226,40 +258,7 @@
 #pragma mark - iMessageComposer Delegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-    [[controller presentingViewController] dismissModalViewControllerAnimated:YES];
+    [[controller presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
-
-
-
-#pragma mark - Facebook delegate
-- (void)fbDidLogin {}
-
-/**
- * Called when the user dismissed the dialog without logging in.
- */
-- (void)fbDidNotLogin:(BOOL)cancelled {}
-
-/**
- * Called after the access token was extended. If your application has any
- * references to the previous access token (for example, if your application
- * stores the previous access token in persistent storage), your application
- * should overwrite the old access token with the new one in this method.
- * See extendAccessToken for more details.
- */
-- (void)fbDidExtendToken:(NSString*)accessToken expiresAt:(NSDate*)expiresAt {}
-
-/**
- * Called when the user logged out.
- */
-- (void)fbDidLogout {}
-
-/**
- * Called when the current session has expired. This might happen when:
- *  - the access token expired
- *  - the app has been disabled
- *  - the user revoked the app's permissions
- *  - the user changed his or her password
- */
-- (void)fbSessionInvalidated {}
 
 @end
