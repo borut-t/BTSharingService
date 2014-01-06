@@ -37,22 +37,23 @@
 #import <Social/Social.h>
 
 //localization keys
-static NSString *const kMailNotEnabledTitleKey       = @"MailNotEnabledTitle";
-static NSString *const kMailNotEnabledMsgKey         = @"MailNotEnabledMsg";
-static NSString *const kiMessageNotEnabledTitleKey   = @"iMessageNotEnabledTitle";
-static NSString *const kiMessageNotEnabledMsgKey     = @"iMessageNotEnabledMsg";
-static NSString *const kFacebookNotEnabledTitleKey   = @"FacebookNotEnabledTitle";
-static NSString *const kFacebookNotEnabledMsgKey     = @"FacebookNotEnabledMsg";
-static NSString *const kFacebookNotAvailableTitleKey = @"FacebookNotAvailableTitle";
-static NSString *const kFacebookNotAvailableMsgKey   = @"FacebookNotAvailableMsg";
-static NSString *const kTwitterNotEnabledTitleKey    = @"TwitterNotEnabledTitle";
-static NSString *const kTwitterNotEnabledMsgKey      = @"TwitterNotEnabledMsg";
-static NSString *const kTwitterNotAvailableTitleKey  = @"TwitterNotAvailableTitle";
-static NSString *const kTwitterNotAvailableMsgKey    = @"TwitterNotAvailableMsg";
+NSString *const kMailNotEnabledTitleKey       = @"MailNotEnabledTitle";
+NSString *const kMailNotEnabledMsgKey         = @"MailNotEnabledMsg";
+NSString *const kiMessageNotEnabledTitleKey   = @"iMessageNotEnabledTitle";
+NSString *const kiMessageNotEnabledMsgKey     = @"iMessageNotEnabledMsg";
+NSString *const kFacebookNotEnabledTitleKey   = @"FacebookNotEnabledTitle";
+NSString *const kFacebookNotEnabledMsgKey     = @"FacebookNotEnabledMsg";
+NSString *const kFacebookNotAvailableTitleKey = @"FacebookNotAvailableTitle";
+NSString *const kFacebookNotAvailableMsgKey   = @"FacebookNotAvailableMsg";
+NSString *const kTwitterNotEnabledTitleKey    = @"TwitterNotEnabledTitle";
+NSString *const kTwitterNotEnabledMsgKey      = @"TwitterNotEnabledMsg";
+NSString *const kTwitterNotAvailableTitleKey  = @"TwitterNotAvailableTitle";
+NSString *const kTwitterNotAvailableMsgKey    = @"TwitterNotAvailableMsg";
+
+NSString *const BTSharingServiceLanguageEnglish   = @"en";
+NSString *const BTSharingServiceLanguageSlovenian = @"sl";
 
 @interface BTSharingService() <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
-
-@property (nonatomic, strong) NSString *prefferedLanguage;
 
 @end
 
@@ -73,17 +74,12 @@ static NSString *const kTwitterNotAvailableMsgKey    = @"TwitterNotAvailableMsg"
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"BTSharingService" ofType:@"bundle"];
     
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    if (self.prefferedLanguage != nil && [bundle.localizations containsObject:self.prefferedLanguage]) {
-        bundlePath = [bundle pathForResource:self.prefferedLanguage ofType:@"lproj"];
+    if (self.preferredLanguage != nil && [bundle.localizations containsObject:self.preferredLanguage]) {
+        bundlePath = [bundle pathForResource:self.preferredLanguage ofType:@"lproj"];
         bundle = [NSBundle bundleWithPath:bundlePath];
     }
     
     return [bundle localizedStringForKey:key value:@"" table:nil];
-}
-
-- (void)setPreferredLanguage:(NSString *)language
-{
-    self.prefferedLanguage = language;
 }
 
 - (void)shareWithType:(BTSharingServiceType)serviceType subject:(NSString *)subject body:(NSString *)body url:(NSURL *)url recipients:(NSArray *)recipients onViewController:(UIViewController *)viewController

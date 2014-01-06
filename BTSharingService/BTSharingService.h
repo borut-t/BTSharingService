@@ -40,11 +40,28 @@ typedef NS_ENUM(NSInteger, BTSharingServiceType) {
     BTSharingServiceTypeSafari
 };
 
+FOUNDATION_EXPORT NSString *const BTSharingServiceLanguageEnglish;
+FOUNDATION_EXPORT NSString *const BTSharingServiceLanguageSlovenian;
+
 @interface BTSharingService : NSObject
 
+@property (nonatomic, copy) NSString *preferredLanguage;
+
+/**
+ BTSharingService singleton method
+ */
 + (id)sharedInstance;
 
-- (void)setPreferredLanguage:(NSString *)language;
+/**
+ Composes a sharing view for selected serviceType.
+ 
+ @param serviceType A BTSharingServiceType to choose from. Use constant BTSharingServiceType.
+ @param subject A subject string to set.
+ @param body A budy string to set.
+ @param url A NSURL object for link.
+ @param recipients (Optional)Recipients list to send to.
+ @param viewController A target view controller to create sharing view on.
+ */
 - (void)shareWithType:(BTSharingServiceType)serviceType
               subject:(NSString *)subject
                  body:(NSString *)body
