@@ -4,23 +4,24 @@ BTSharingService
 Nice and simple sharing service solution.
 
 
-Installation
---------------
+#Supported OS
+iOS 5+
 
+
+#Installation
 To use the BTSharingService in an app, just drag the BTSharingService class files and BTSharingService.bundle into your project
 or
-Install it using cocoapods pod 'BTSharingService'
+Install it using cocoapods 
+	pod 'BTSharingService'
 
 
-Methods
---------------
-
-The BTProgressView has the following properties:
-
-              - (void)setPreferredLanguage:(NSString *)language;
+#Property
+              @property (nonatomic, copy) NSString *preferredLanguage;
 
 Set language if you do not want to have system's default language.
 
+
+#Method
               - (void)shareWithType:(BTSharingServiceType)serviceType
                             subject:(NSString *)subject
                                body:(NSString *)body
