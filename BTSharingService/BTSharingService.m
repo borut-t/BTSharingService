@@ -1,7 +1,7 @@
 //
 //  BTSharingService.m
 //
-//  Version 1.0
+//  Version 1.1
 //
 //  Created by Borut Tomazin on 8/30/2013.
 //  Copyright 2013 Borut Tomazin
@@ -49,6 +49,7 @@ NSString *const kTwitterNotEnabledTitleKey    = @"TwitterNotEnabledTitle";
 NSString *const kTwitterNotEnabledMsgKey      = @"TwitterNotEnabledMsg";
 NSString *const kTwitterNotAvailableTitleKey  = @"TwitterNotAvailableTitle";
 NSString *const kTwitterNotAvailableMsgKey    = @"TwitterNotAvailableMsg";
+NSString *const kServiceNotAvailableOkButton  = @"ServiceNotAvailableOkButton";
 
 NSString *const BTSharingServiceLanguageEnglish   = @"en";
 NSString *const BTSharingServiceLanguageSlovenian = @"sl";
@@ -107,7 +108,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kFacebookNotEnabledTitleKey]
                                                                         message:[self localizedStringForKey:kFacebookNotEnabledMsgKey]
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"V redu"
+                                                              cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                               otherButtonTitles:nil, nil];
                     [alertView show];
                 }
@@ -117,7 +118,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kFacebookNotAvailableTitleKey]
                                                                     message:[self localizedStringForKey:kFacebookNotAvailableMsgKey]
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"V redu"
+                                                          cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                           otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -145,7 +146,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotEnabledTitleKey]
                                                                         message:[self localizedStringForKey:kTwitterNotEnabledMsgKey]
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"V redu"
+                                                              cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                               otherButtonTitles:nil, nil];
                     [alertView show];
                 }
@@ -168,7 +169,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotEnabledTitleKey]
                                                                         message:[self localizedStringForKey:kTwitterNotEnabledMsgKey]
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"V redu"
+                                                              cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                               otherButtonTitles:nil, nil];
                     [alertView show];
                 }
@@ -178,7 +179,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kTwitterNotAvailableTitleKey]
                                                                     message:[self localizedStringForKey:kTwitterNotAvailableMsgKey]
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"V redu"
+                                                          cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                           otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -203,7 +204,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kMailNotEnabledTitleKey]
                                                                 message:[self localizedStringForKey:kMailNotEnabledMsgKey]
                                                                delegate:nil
-                                                      cancelButtonTitle:@"V redu"
+                                                      cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                       otherButtonTitles:nil];
                 [alert show];
             }
@@ -225,7 +226,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[self localizedStringForKey:kiMessageNotEnabledTitleKey]
                                                                 message:[self localizedStringForKey:kiMessageNotEnabledMsgKey]
                                                                delegate:nil
-                                                      cancelButtonTitle:@"V redu"
+                                                      cancelButtonTitle:[self localizedStringForKey:kServiceNotAvailableOkButton]
                                                       otherButtonTitles:nil];
                 [alert show];
             }

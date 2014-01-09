@@ -13,3 +13,5 @@
 "TwitterNotEnabledMsg"      = "You can enable it in device settings (Settings -> Twitter).";
 "TwitterNotAvailableTitle"  = "Twitter is only available for devices with iOS 5.0 or newer";
 "TwitterNotAvailableMsg"    = "Please upgrade.";
+
+"ServiceNotAvailableOkButton" = "Ok";

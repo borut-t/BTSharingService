@@ -13,3 +13,5 @@
 "TwitterNotEnabledMsg"      = "Vklopite ga v nastavitvah naprave (Settings -> Twitter).";
 "TwitterNotAvailableTitle"  = "Twitter je na voljo samo za naprave z nameščenim iOS 5.0 ali novejšim.";
 "TwitterNotAvailableMsg"    = "Če imate možnost potem nadgradite iOS.";
+
+"ServiceNotAvailableOkButton" = "V redu";
