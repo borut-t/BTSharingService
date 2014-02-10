@@ -15,21 +15,25 @@ Install it using cocoapods
 	pod 'BTSharingService'
 
 
-#Property
-              @property (nonatomic, copy) NSString *preferredLanguage;
+#Properties
+	@property (nonatomic, copy) NSString *preferredLanguage;
 
 Set language if you do not want to have system's default language.
 
+	@property (nonatomic, assign) BOOL shouldResetBarTintColor;
+
+Set to YES if navigation bar colors should be reset to default values (ignoring app colors).
+
 
 #Method
-              - (void)shareWithType:(BTSharingServiceType)serviceType
-                            subject:(NSString *)subject
-                               body:(NSString *)body
-                                url:(NSURL *)url
-                         recipients:(NSArray *)recipients
-                   onViewController:(UIViewController *)viewController;
+	- (void)shareWithType:(BTSharingServiceType)serviceType
+              subject:(NSString *)subject
+                 body:(NSString *)body
+                  url:(NSURL *)url
+           recipients:(NSArray *)recipients
+     onViewController:(UIViewController *)viewController;
 
-Trigger share widget.
+Composes a sharing view for selected serviceType.
 
 
 ## ARC Support
