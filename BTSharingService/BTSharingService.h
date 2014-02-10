@@ -45,7 +45,15 @@ FOUNDATION_EXPORT NSString *const BTSharingServiceLanguageSlovenian;
 
 @interface BTSharingService : NSObject
 
+/**
+ Set default language instead of system one. If empty, system language is used.
+ */
 @property (nonatomic, copy) NSString *preferredLanguage;
+
+/**
+ Set to YES if navigation bar colors should be reset to default values (ignoring app colors).
+ */
+@property (nonatomic, assign) BOOL shouldResetBarTintColor;
 
 /**
  BTSharingService singleton method

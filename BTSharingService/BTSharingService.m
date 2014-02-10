@@ -56,6 +56,9 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
 
 @interface BTSharingService() <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
+@property (nonatomic, strong) UIColor *presentedViewBarTintColor;
+@property (nonatomic, strong) UIImage *presentedViewBarBackgroundImage;
+
 @end
 
 @implementation BTSharingService
@@ -190,6 +193,8 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
         case BTSharingServiceTypeMail:
         {
             if ([MFMailComposeViewController canSendMail]) {
+                [self setTintColors];
+                
                 MFMailComposeViewController *sendEmail = [[MFMailComposeViewController alloc] init];
                 sendEmail.mailComposeDelegate = self;
                 [sendEmail setSubject:subject];
@@ -215,6 +220,8 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
         case BTSharingServiceTypeiMessage:
         {
             if ([MFMessageComposeViewController canSendText]) {
+                [self setTintColors];
+                
                 MFMessageComposeViewController *sendMessage = [[MFMessageComposeViewController alloc] init];
                 sendMessage.messageComposeDelegate = self;
                 [sendMessage setBody:body];
@@ -239,6 +246,37 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
             [[UIApplication sharedApplication] openURL:url];
         }
             break;
+    }
+}
+
+
+
+#pragma mark - Custom methods
+- (void)setTintColors
+{
+    if (self.shouldResetBarTintColor) {
+        if ([UINavigationBar instancesRespondToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+            self.presentedViewBarBackgroundImage = [[UINavigationBar appearance] backgroundImageForBarMetrics:UIBarMetricsDefault];
+            [[UINavigationBar appearance] setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        }
+        if ([UINavigationBar instancesRespondToSelector:@selector(setBarTintColor:)]) {
+            self.presentedViewBarTintColor = [[UINavigationBar appearance] barTintColor];
+            [[UINavigationBar appearance] setBarTintColor:nil];
+        }
+    }
+}
+
+- (void)resetTintColors
+{
+    if (self.shouldResetBarTintColor) {
+        if ([UINavigationBar instancesRespondToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+            [[UINavigationBar appearance] setBackgroundImage:self.presentedViewBarBackgroundImage forBarMetrics:UIBarMetricsDefault];
+            self.presentedViewBarBackgroundImage = nil;
+        }
+        if ([UINavigationBar instancesRespondToSelector:@selector(setBarTintColor:)]) {
+            [[UINavigationBar appearance] setBarTintColor:self.presentedViewBarTintColor];
+            self.presentedViewBarTintColor = nil;
+        }
     }
 }
 
