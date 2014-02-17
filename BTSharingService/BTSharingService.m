@@ -285,6 +285,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
 #pragma mark - MailComposer Delegate
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
+    [self resetTintColors];
     [[controller presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -293,6 +294,7 @@ NSString *const BTSharingServiceLanguageSlovenian = @"sl";
 #pragma mark - iMessageComposer Delegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
+    [self resetTintColors];
     [[controller presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
 
